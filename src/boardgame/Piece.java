@@ -1,5 +1,6 @@
 package boardgame;
 
+//criação de peças!
 public class Piece {
 
 	protected Position position;
