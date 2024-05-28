@@ -58,7 +58,16 @@ public class UI {
 		printCapturedPieces(captured);
 		System.out.println();
 		System.out.println("Turno: " + chessMatch.getTurn());
-		System.out.print("Esperando jogador: " + chessMatch.getCurrentPlayer());
+		if(!chessMatch.getCheckMate()) {
+			System.out.println("Esperando jogador: " + chessMatch.getCurrentPlayer());
+			if (chessMatch.getCheck()) {
+				System.out.println("CHECK!");
+			}
+		}else {
+			System.out.println("CHECKMATE!");
+			System.out.println("Vencedor: " + chessMatch.getCurrentPlayer());
+		}
+		
 	}
 	public static void printBoard(ChessPiece[][] pieces) {
 		for(int i= 0; i<pieces.length;i++) {
@@ -101,16 +110,21 @@ public class UI {
 	}
 	
 	private static void printCapturedPieces(List<ChessPiece> captured) {
-		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
-		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
-		System.out.print("Peças capturadas: ");
-		System.out.println("Brancas: ");
-		System.out.print(ANSI_WHITE);
-		System.out.println(Arrays.toString(white.toArray()));
-		System.out.print(ANSI_RESET);
-		System.out.println("Pretas: ");
-		System.out.print(ANSI_YELLOW);
-		System.out.print(Arrays.toString(black.toArray()));
-		System.out.print(ANSI_RESET);
+	    List<ChessPiece> white = captured.stream()
+	        .filter(x -> x != null && x.getColor() == Color.WHITE)
+	        .collect(Collectors.toList());
+	    List<ChessPiece> black = captured.stream()
+	        .filter(x -> x != null && x.getColor() == Color.BLACK)
+	        .collect(Collectors.toList());
+	    System.out.print("Peças capturadas: ");
+	    System.out.println("Brancas: ");
+	    System.out.print(ANSI_WHITE);
+	    System.out.println(Arrays.toString(white.toArray()));
+	    System.out.print(ANSI_RESET);
+	    System.out.println("Pretas: ");
+	    System.out.print(ANSI_YELLOW);
+	    System.out.print(Arrays.toString(black.toArray()));
+	    System.out.print(ANSI_RESET);
 	}
+
 }
